@@ -42,6 +42,19 @@ public extension String {
     }
     
     /**
+     Check if all characters in the string are equal
+     */
+    var charactersAreAllEqual: Bool {
+        if self.isEmpty { return false }
+        if self.count == 1 { return true }
+        
+        for i in 1..<self.count where self[unsafe: i] != self[unsafe: 0] {
+            return false
+        }
+        return true
+    }
+    
+    /**
      Insert a string at a specified index. Throws an error if index doesn't exist.
      - Parameters:
         - string: string to be inserted
