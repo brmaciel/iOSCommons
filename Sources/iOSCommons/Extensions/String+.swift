@@ -15,11 +15,21 @@ public extension String {
     }
     
     /**
+     Return character at an index unsafely. If index doesn't exist, there will be a run time error
+     
+     - Attention: Only use this subscript if you are sure that the index exists. Otherwise, is recomended to use the `safe` subscript.
+     - Returns: Character at informed index.
+     */
+    subscript (unsafe index: Int) -> Character {
+        return self[self.index(self.startIndex, offsetBy: index)]
+    }
+    
+    /**
      Try to return character at an index safely.
      - Returns: Character at informed index. If index doesn't exist, returns nil
      */
     subscript (safe index: Int) -> Character? {
-        return containsIndex(index) ? self[self.index(self.startIndex, offsetBy: index)] : nil
+        return containsIndex(index) ? self[unsafe: index] : nil
     }
     
     /**
