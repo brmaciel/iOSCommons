@@ -18,19 +18,46 @@ public class CPFValidator {
 
 
     // MARK: - Methods
+
+}
+
+// MARK: - DocumentValidator implementation
+extension CPFValidator: DocumentValidator {
+    public func validateLength(of documentNumber: String) -> DocumentLengthValidationStatus {
+        if documentNumber.isEmpty { return .empty }
+        if documentNumber.count < formatter.numberOfDigits { return .incomplete }
+        if documentNumber.count > formatter.numberOfDigits { return .invalid }
+        
+        return .valid
+    }
     
+    public func validate(_ documentNumber: String) -> DocumentValidationStatus {
+        if documentNumber.isEmpty { return .empty }
+        
+        guard documentNumber.count == documentNumber.onlyDigits.count else { return .invalid }
+        
+        if documentNumber.count < formatter.numberOfDigits { return .incomplete }
+        if documentNumber.count > formatter.numberOfDigits { return .invalid }
+        
+        return validateCpf(documentNumber) ? .valid : .invalid
+    }
+    
+    public func format(document: String) -> String {
+        return formatter.format(document)
+    }
+}
+
+// MARK: - CPF Validation flow
+extension CPFValidator {
     private func validateCpf(_ informedCpf: String) -> Bool {
         // Check if has 11 digits only
         guard
-            informedCpf.count == 11,
+            informedCpf.count == formatter.numberOfDigits,
             informedCpf.count == informedCpf.onlyDigits.count
             else { return false }
         
         // Check if digits are not all equal
-        for i in 1..<informedCpf.count {
-            if informedCpf[safe: i]! != informedCpf.first! { break }
-            else if i == informedCpf.count - 1 { return false }
-        }
+        guard !informedCpf.charactersAreAllEqual else { return false }
         
         guard var digitsArray = informedCpf.map({ Int(String($0)) }) as? [Int] else { return false }
         let digit2 = digitsArray.removeLast()
@@ -40,7 +67,6 @@ public class CPFValidator {
         // First digit validation
         let expectedFirstDigit = computeFirstValidationDigit(from: digitsArray)
         guard expectedFirstDigit == digit1 else { return false }
-        
         
         // Second digit validation
         digitsArray.append(digit1)
@@ -100,32 +126,5 @@ public class CPFValidator {
         if validationDigit >= 10 { validationDigit = 0 }
         
         return validationDigit
-    }
-
-}
-
-// MARK: - DocumentValidator implementation
-extension CPFValidator: DocumentValidator {
-    public func validateLength(of documentNumber: String) -> DocumentLengthValidationStatus {
-        if documentNumber.isEmpty { return .empty }
-        if documentNumber.count < formatter.numberOfDigits { return .incomplete }
-        if documentNumber.count > formatter.numberOfDigits { return .invalid }
-        
-        return .valid
-    }
-    
-    public func validate(_ documentNumber: String) -> DocumentValidationStatus {
-        if documentNumber.isEmpty { return .empty }
-        
-        guard documentNumber.count == documentNumber.onlyDigits.count else { return .invalid }
-        
-        if documentNumber.count < formatter.numberOfDigits { return .incomplete }
-        if documentNumber.count > formatter.numberOfDigits { return .invalid }
-        
-        return validateCpf(documentNumber) ? .valid : .invalid
-    }
-    
-    public func format(document: String) -> String {
-        return formatter.format(document)
     }
 }
