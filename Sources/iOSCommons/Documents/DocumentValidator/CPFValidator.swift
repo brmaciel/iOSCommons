@@ -81,13 +81,13 @@ extension CPFValidator {
      
      ~~~
      // Validation logic
-     let cpf = "123.456.789-92"
+     let cpf = "123.456.789-09"
      // 1  2 3 4 5 6 7 8 9 (cpf)
      // 10 9 8 7 6 5 4 3 2 (multipliers)
-     // 10 18 24 28 30 30 29 24 18 (multiplication result)
-     // 211                 (sum of multiplication result)
-     // 211 * 10 = 2110 % 11 = 9 (validation digit)
-     // if previous validation digit is = 10, it would be replaced by 0
+     // 10 18 24 28 30 30 28 24 18 (multiplication result)
+     // 210                 (sum of multiplication result)
+     // 210 * 10 = 2110 % 11 = 10 (validation digit)
+     // validation digit is = 10, do it's replaced by 0
      ~~~
      */
     private func computeFirstValidationDigit(from digitsArray: [Int]) -> Int {
@@ -107,12 +107,12 @@ extension CPFValidator {
      
      ~~~
      // Validation logic
-     let cpf = "123.456.789-92"
-     // 1  2  3 4 5 6 7 8 9 9 (cpf)
+     let cpf = "123.456.789-09"
+     // 1  2  3 4 5 6 7 8 9 0 (cpf)
      // 11 10 9 8 7 6 5 4 3 2 (multipliers)
-     // 11 20 27 32 35 36 35 32 27 18 (multiplication result)
-     // 273                    (sum of multiplication result)
-     // 273 * 10 = 2730 % 11 = 2 (validation digit)
+     // 11 20 27 32 35 36 35 32 27 0 (multiplication result)
+     // 255                    (sum of multiplication result)
+     // 255 * 10 = 2550 % 11 = 9 (validation digit)
      // if previous validation digit is = 10, it would be replaced by 0
      ~~~
      */
