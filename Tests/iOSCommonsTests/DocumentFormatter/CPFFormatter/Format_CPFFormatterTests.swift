@@ -82,6 +82,6 @@ class Format_CPFFormatterTests: XCTestCase {
         // Then
         XCTAssertEqual(formattedDocument,
                        "123.456.789-01",
-                       "format() a CPF with a size greater than expect should truncate the extra character")
+                       "format() a CPF with a size greater than expected should truncate the extra characters")
     }
 }

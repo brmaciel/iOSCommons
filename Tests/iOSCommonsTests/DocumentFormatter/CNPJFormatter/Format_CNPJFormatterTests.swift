@@ -82,6 +82,6 @@ class Format_CNPJFormatterTests: XCTestCase {
         // Then
         XCTAssertEqual(formattedDocument,
                        "12.345.678/0001-98",
-                       "format() a CNPJ with a size greater than expect should truncate the extra character")
+                       "format() a CNPJ with a size greater than expected should truncate the extra characters")
     }
 }
