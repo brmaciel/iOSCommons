@@ -113,13 +113,12 @@ class Validate_CPFValidatorTests: XCTestCase {
         // Given
         
         // When
-        let validationStatus = cpfValidator.validate("12345678992")
+        let validationStatus = cpfValidator.validate("12345678909")
         
         // Then
         XCTAssertEqual(validationStatus,
-                       DocumentValidationStatus.invalid,
+                       DocumentValidationStatus.valid,
                        "validate() a valid CPF should return state .valid")
     }
 
 }
-
