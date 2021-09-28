@@ -25,9 +25,3 @@ public class DocumentFormatterFactory {
         }
     }
 }
-
-public enum DocumentType {
-    case cpf
-    case cnpj
-    case hybridCPFandCNPJ
-}
