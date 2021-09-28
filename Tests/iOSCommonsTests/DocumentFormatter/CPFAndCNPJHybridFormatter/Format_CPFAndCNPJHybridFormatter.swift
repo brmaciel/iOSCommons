@@ -100,6 +100,19 @@ class Format_CPFAndCNPJHybridFormatterTests: XCTestCase {
                        "format() an incomplete CNPJ using the HybridFormatter should return the same string as it was formatted by CNPJFormatter")
     }
     
+    func test_complete_cnpj_document_number() {
+        // Given
+        let document = "12345678000198"
+        
+        // When
+        let formattedDocument = hybridFormatter.format(document)
+        
+        // Then
+        XCTAssertEqual(formattedDocument,
+                       cnpjFormatter.format(document),
+                       "format() a complete CNPJ using the HybridFormatter should return the same string as it was formatted by CNPJFormatter")
+    }
+    
     func test_document_number_with_size_greater_than_expected() {
         // Given
         let document = "123456780001987"
@@ -110,6 +123,6 @@ class Format_CPFAndCNPJHybridFormatterTests: XCTestCase {
         // Then
         XCTAssertEqual(formattedDocument,
                        cnpjFormatter.format(document),
-                       "format() a CNPJ with a size greater than expect when using the HybridFormatter should return the same string as it was formatted by CNPJFormatter")
+                       "format() a CNPJ with a size greater than expected when using the HybridFormatter should return the same string as it was formatted by CNPJFormatter")
     }
 }
